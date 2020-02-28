@@ -1,16 +1,19 @@
 {
-  "name": "openfaas-node12",
+  "name": "openfaas-open-abap",
   "version": "1.0.0",
-  "description": "",
+  "description": "Template for ABAP source based functinos",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no tests specified\" && exit 0"
   },
   "keywords": [],
-  "author": "OpenFaaS Ltd",
+  "author": "Oliver Jaegle",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "transpiler_poc": "github:abaplint/transpiler_poc"
   }
 }

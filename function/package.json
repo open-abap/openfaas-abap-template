@@ -1,12 +1,12 @@
 {
-  "name": "openfaas-function",
+  "name": "open-abap-function",
   "version": "1.0.0",
-  "description": "OpenFaaS Function",
-  "main": "handler.js",
+  "description": "OpenABAP Function",
+  "main": "handler.abap",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "keywords": [],
-  "author": "OpenFaaS Ltd",
+  "author": "",
   "license": "MIT"
 }

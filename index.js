@@ -1,11 +1,8 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
 "use strict"
 
 const express = require('express')
 const app = express()
-const handler = require('./function/handler');
+const handler = require('.build/handler'); // this is the JS source which has been transpoled from ABAP
 const bodyParser = require('body-parser')
 
 if (process.env.RAW_BODY === 'true') {
@@ -106,7 +103,7 @@ app.delete('/*', middleware);
 const port = process.env.http_port || 3000;
 
 app.listen(port, () => {
-    console.log(`OpenFaaS Node.js listening on port: ${port}`)
+    console.log(`OpenFaaS Node.js to execute ABAP listening on port: ${port}`)
 });
 
 let isArray = (a) => {
