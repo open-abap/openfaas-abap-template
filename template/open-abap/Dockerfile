@@ -4,7 +4,7 @@ FROM node:12.13.0-alpine as ship
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
-RUN apk --no-cache add curl ca-certificates \
+RUN apk --no-cache add curl ca-certificates git \
     && addgroup -S app && adduser -S -g app app
 
 WORKDIR /root/
