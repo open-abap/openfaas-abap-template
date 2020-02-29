@@ -4,7 +4,10 @@
   "description": "Template for ABAP source based functinos",
   "main": "index.js",
   "scripts": {
-    "build": "node ./scripts/build.js",
+    "prebuild": "npm run build:transpiler",
+    "build": "npm run build:transpile-abap",
+    "build:transpile-abap": "node ./scripts/build.js",
+    "build:transpiler": "cd node_modules/transpiler_poc/ && rm -rf build && npm i && node_modules/.bin/tsc && cd -",
     "test": "echo \"Error: no tests specified\" && exit 0"
   },
   "keywords": [],

@@ -10,7 +10,7 @@ const BUILD_DIR = 'build'
 
 const transpiler = new Transpiler()
 const abapToJs = async function (abapFile){
-    return transpiler.run(fs.readFile(abapFile))
+    return transpiler.run((await (await fs.readFile(abapFile)).toString()))
 }
 
 const run = async function () {
