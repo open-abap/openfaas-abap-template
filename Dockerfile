@@ -29,12 +29,11 @@ COPY index.js ./
 
 WORKDIR /home/app/function
 
-COPY function/*.json ./
+# Trigger the transpilation
+RUN npm build
 
-RUN npm i || :
-
-# COPY function files and folders
-COPY function/ ./
+# COPY built files and folders
+COPY build/ ./
 
 # Run any tests that may be available
 RUN npm test

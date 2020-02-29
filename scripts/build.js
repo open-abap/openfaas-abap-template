@@ -22,7 +22,7 @@ const abapToJs = async function (abapFile){
 
 const mockFunctionTranspilation = function (source){
     return source
-        .replace('todo, statement: FunctionModule', 'module.exports = function(input){\n// Generated code - do not edit\nlet output = new abap.types.String();')
+        .replace('todo, statement: FunctionModule', 'module.exports = async function(input){\n// Generated code - do not edit\nlet output = new abap.types.String();')
         .replace(/todo, statement: Comment\s?/g, '', )
         .replace('todo, statement: EndFunction', 'return output.get()\n}')
 }
