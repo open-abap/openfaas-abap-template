@@ -1,11 +1,12 @@
 FUNCTION HANDLER.
 *"----------------------------------------------------------------------
 **"  IMPORTING
-*"     REFERENCE(IN) TYPE REF TO DATA
+*"     REFERENCE(INPUT) TYPE ANY
 *"  EXPORTING
-*"     REFERENCE(OUT) TYPE REF TO DATA
+*"     REFERENCE(OUTPUT) TYPE STRING
 *"----------------------------------------------------------------------
 
-
+* Put your ABAP code here.
+* In the end, move the (stringified) result to the variable OUTPUT
 
 ENDFUNCTION.

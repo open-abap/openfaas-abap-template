@@ -10,7 +10,21 @@ const BUILD_DIR = 'build'
 
 const transpiler = new Transpiler()
 const abapToJs = async function (abapFile){
-    return transpiler.run((await (await fs.readFile(abapFile)).toString()))
+    let transpiledSource = transpiler.run((await (await fs.readFile(abapFile)).toString()))
+    transpiledSource = 'const abap = require("../node_modules/transpiler_poc/build/src/runtime")'
+                        + '\n'
+                        + transpiledSource
+    if(abapFile.match(/.*handler.abap$/)){
+        return mockFunctionTranspilation(transpiledSource)
+    }
+    return transpiledSource
+}
+
+const mockFunctionTranspilation = function (source){
+    return source
+        .replace('todo, statement: FunctionModule', 'module.exports = function(input){\n// Generated code - do not edit\nlet output = new abap.types.String();')
+        .replace(/todo, statement: Comment\s?/g, '', )
+        .replace('todo, statement: EndFunction', 'return output.get()\n}')
 }
 
 const run = async function () {
