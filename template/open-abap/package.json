@@ -22,6 +22,6 @@
     "klaw": "^3.0.0",
     "path": "^0.12.7",
     "through2": "^3.0.1",
-    "transpiler_poc": "abaplint/transpiler_poc"
+    "transpiler_poc": "https://github.com/abaplint/transpiler_poc.git"
   }
 }
