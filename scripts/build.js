@@ -1,6 +1,49 @@
-const copyDir = require('./fileUtils').copyDir
+
+const klaw = require('klaw')
+const through2 = require('through2')
+const path = require('path')
+const fs = require('fs-extra')
+const Transpiler = new require('../node_modules/transpiler_poc/build/src/transpiler').Transpiler
 
 const SOURCE_DIR = 'function'
 const BUILD_DIR = 'build'
 
-copyDir(SOURCE_DIR, BUILD_DIR)
+const transpiler = new Transpiler()
+const abapToJs = async function (abapFile){
+    return transpiler.run(fs.readFile(abapFile))
+}
+
+const run = async function () {
+    try {
+        await fs.emptyDir(BUILD_DIR)
+        await fs.rmdir(BUILD_DIR)
+    } catch(e){
+        // expected: build dir might not exist
+    }
+
+    await fs.ensureDir(BUILD_DIR)
+
+    const filterAbapFiles = through2.obj(function (item, enc, next) {
+        if (path.extname(item.path) === '.abap') {
+            this.push(item)
+        }
+        next()
+    })
+
+    const abapFiles = [] // files, directories, symlinks, etc
+    klaw(SOURCE_DIR)
+        .on('error', err => filterAbapFiles.emit('error', err)) // forward the error on
+        .pipe(filterAbapFiles)
+        .on('data', item => abapFiles.push(item.path))
+        .on('end', () => {
+            abapFiles.forEach(async (file) => {
+                const source = await abapToJs(file)
+                const outFile = file.replace(new RegExp(`^${process.cwd()}/${SOURCE_DIR}(.*)\.abap$`), `${process.cwd()}/${BUILD_DIR}$1.js`)
+                await fs.ensureFile(outFile)
+                await fs.writeFile(outFile, source)
+            })
+        })
+}
+
+
+run()
