@@ -18,10 +18,14 @@ RUN mkdir -p /home/app
 WORKDIR /home/app
 COPY package.json ./
 
-RUN npm i
-
 # Copy outer function handler
 COPY index.js ./
+
+# TODO: Remove workaround
+RUN npm i abaplint
+
+# Install (OpenFaaS dependencies)
+RUN npm i
 
 # Trigger the transpilation
 COPY scripts ./scripts
