@@ -3,7 +3,7 @@ const klaw = require('klaw')
 const through2 = require('through2')
 const path = require('path')
 const fs = require('fs-extra')
-const Transpiler = new require('../node_modules/transpiler_poc/build/src/transpiler').Transpiler
+const Transpiler = new require('@abaplint/transpiler').Transpiler
 
 const SOURCE_DIR = 'function'
 const BUILD_DIR = 'build'
@@ -11,7 +11,7 @@ const BUILD_DIR = 'build'
 const transpiler = new Transpiler()
 const abapToJs = async function (abapFile){
     let transpiledSource = transpiler.run((await (await fs.readFile(abapFile)).toString()))
-    transpiledSource = 'const abap = require("../node_modules/transpiler_poc/build/src/runtime")'
+    transpiledSource = 'const abap = require("@abaplint/runtime")'
                         + '\n'
                         + transpiledSource
     if(abapFile.match(/.*handler.abap$/)){
