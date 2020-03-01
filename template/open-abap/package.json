@@ -22,7 +22,6 @@
     "fs-extra": "^8.1.0",
     "klaw": "^3.0.0",
     "path": "^0.12.7",
-    "through2": "^3.0.1",
-    "transpiler_poc": "https://github.com/abaplint/transpiler_poc.git"
+    "through2": "^3.0.1"
   }
 }
