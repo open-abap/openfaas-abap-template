@@ -18,6 +18,13 @@ RUN mkdir -p /home/app
 WORKDIR /home/app
 COPY package.json ./
 
+# Update npm
+RUN npm install npm -g
+
+# Prior to installing other dependencies, add abaplint. Else, installation of transpiler_poc fails
+# TODO: Remove workaround
+RUN npm i abaplint
+
 # This ordering means the npm installation is cached for the outer function handler.
 RUN npm i
 
