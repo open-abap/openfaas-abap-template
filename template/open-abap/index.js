@@ -76,7 +76,7 @@ var middleware = async (req, res) => {
         if(isArray(functionResult) || isObject(functionResult)) {
             res.set(fnContext.headers()).status(fnContext.status()).send(JSON.stringify(functionResult));
         } else {
-            res.set(fnContext.headers()).status(fnContext.status()).send(functionResult);
+            res.set(fnContext.headers()).status(fnContext.status()).send({result: functionResult});
         }
     };
 
@@ -86,7 +86,9 @@ var middleware = async (req, res) => {
     Promise.resolve(handler(fnEvent.body))
     .then(res => {
         if(!fnContext.cbCalled) {
-            fnContext.succeed(res);
+            fnContext
+                .status(200)
+                .succeed(res)
         }
     })
     .catch(e => {

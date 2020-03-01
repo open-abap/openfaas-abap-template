@@ -7,11 +7,20 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Launch Server",
+            "program": "${workspaceFolder}/template/open-abap/index.js",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "build",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/scripts/build.js"
+            "program": "${workspaceFolder}/template/open-abap/scripts/build.js"
         }
     ]
 }

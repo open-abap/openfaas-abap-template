@@ -1,9 +1,10 @@
 FUNCTION HANDLER.
 *"----------------------------------------------------------------------
 **"  IMPORTING
-*"     REFERENCE(INPUT) TYPE ANY
+*"     INPUT TYPE STRING
 *"  EXPORTING
-*"     REFERENCE(OUTPUT) TYPE STRING
+*"     OUTPUT TYPE STRING
+*"     CODE   TYPE I DEFAULT 200 "TODO: Implement transpiler and handler
 *"----------------------------------------------------------------------
 
 * Put your ABAP code here.
