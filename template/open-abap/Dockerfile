@@ -18,13 +18,6 @@ RUN mkdir -p /home/app
 WORKDIR /home/app
 COPY package.json ./
 
-# Update npm
-RUN npm install npm -g
-
-# Prior to installing other dependencies, add abaplint. Else, installation of transpiler_poc fails
-# TODO: Remove workaround
-RUN npm i abaplint
-
 RUN npm i
 
 # Copy outer function handler
