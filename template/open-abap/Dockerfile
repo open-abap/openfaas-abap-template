@@ -25,22 +25,15 @@ RUN npm install npm -g
 # TODO: Remove workaround
 RUN npm i abaplint
 
-# This ordering means the npm installation is cached for the outer function handler.
 RUN npm i
 
 # Copy outer function handler
 COPY index.js ./
 
-# COPY function node packages and install, adding this as a separate
-# entry allows caching of npm install
-
-WORKDIR /home/app/function
-
 # Trigger the transpilation
-RUN npm run build
-
-# COPY built files and folders
-COPY build/ ./
+COPY scripts ./scripts
+COPY function ./function
+RUN npm run build && rm -rf ./function
 
 # Run any tests that may be available
 RUN npm test
@@ -66,4 +59,3 @@ ENV read_timeout="15s"
 HEALTHCHECK --interval=3s CMD [ -e /tmp/.lock ] || exit 1
 
 CMD ["fwatchdog"]
-
