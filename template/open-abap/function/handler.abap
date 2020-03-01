@@ -4,7 +4,7 @@ FUNCTION HANDLER.
 *"     INPUT TYPE STRING
 *"  EXPORTING
 *"     OUTPUT TYPE STRING
-*"     CODE   TYPE I DEFAULT 200 "TODO: Implement transpiler and handler
+*"     CODE   TYPE I DEFAULT 200 "HTTP result code
 *"----------------------------------------------------------------------
 
 * Put your ABAP code here.
