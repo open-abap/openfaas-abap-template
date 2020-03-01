@@ -37,7 +37,7 @@ COPY index.js ./
 WORKDIR /home/app/function
 
 # Trigger the transpilation
-RUN npm build
+RUN npm run build
 
 # COPY built files and folders
 COPY build/ ./
