@@ -21,19 +21,17 @@ COPY package.json ./
 # Copy outer function handler
 COPY index.js ./
 
-# TODO: Remove workaround
-RUN npm i abaplint
-
 # Install (OpenFaaS dependencies)
 RUN npm i
 
 # Trigger the transpilation
 COPY scripts ./scripts
 COPY function ./function
-RUN npm run build && rm -rf ./function
+RUN npm run build
 
-# Run any tests that may be available
-RUN npm test
+# TODO: Add parameter to toggle tessting during docker build
+# # Run any tests that may be available
+# RUN npm test
 
 # Set correct permissions to use non root user
 WORKDIR /home/app/
