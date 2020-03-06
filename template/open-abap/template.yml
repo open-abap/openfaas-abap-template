@@ -4,7 +4,7 @@ welcome_message: |
   You are about to venture the unknown depths of outer space: 
   Go, where no ABAP code has ever gone before: Into the realms where there's no Netweaver.
 
-  Howver, be aware: st this statge, a netweaver-less ABAP is only a proof of concept:
+  However, be aware: at this stage, a Netweaver-less ABAP is only a proof of concept:
   Hardly any language features are supported - yet.
   Feel free to experiment and contribute though!
 

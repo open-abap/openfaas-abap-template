@@ -1,7 +1,7 @@
 FUNCTION HANDLER.
 *"----------------------------------------------------------------------
 *"  IMPORTING
-*"     input TYPE STRING
+*"     body TYPE STRING
 *"  EXPORTING
 *"     output TYPE STRING
 *"     code   TYPE I
