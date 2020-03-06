@@ -9,8 +9,4 @@ welcome_message: |
   Feel free to experiment and contribute though!
 
   Under the hood, this template scaffolds a transpilation of your ABAP source to Javascript.
-  It will also execute only this Javascript. 
-
-  Unit tests are run at build time via "npm run", edit package.json to specify 
-  how you want to execute them.
-
+  It will also execute only this Javascript.

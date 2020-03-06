@@ -3,7 +3,7 @@ FUNCTION HANDLER.
 *"  IMPORTING
 *"     body TYPE STRING
 *"  EXPORTING
-*"     output TYPE STRING
+*"     result TYPE STRING
 *"     code   TYPE I
 *"----------------------------------------------------------------------
 

@@ -56,7 +56,7 @@ const abapToJs = async function (abapFile) {
         return FUNCTION_SETUP
             + transpiledSource
                 .replace('todo, statement: FunctionModule', '')
-                .replace('todo, statement: EndFunction', 'return {result: output.get(), code: code.get()}\n}')
+                .replace('todo, statement: EndFunction', 'return {result: result.get(), code: code.get()}\n}')
     }
 
     let abapSourceString = (await fs.readFile(abapFile)).toString()
