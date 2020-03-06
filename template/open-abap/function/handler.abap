@@ -8,6 +8,6 @@ FUNCTION HANDLER.
 *"----------------------------------------------------------------------
 
 * Put your ABAP code here.
-* In the end, move the (stringified) result to the variable OUTPUT
+* In the end, move the (stringified) result to the variable "result"
 
 ENDFUNCTION.
