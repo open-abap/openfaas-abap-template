@@ -1,10 +1,10 @@
 FUNCTION HANDLER.
 *"----------------------------------------------------------------------
-**"  IMPORTING
-*"     INPUT TYPE STRING
+*"  IMPORTING
+*"     input TYPE STRING
 *"  EXPORTING
-*"     OUTPUT TYPE STRING
-*"     CODE   TYPE I DEFAULT 200 "HTTP result code
+*"     output TYPE STRING
+*"     code   TYPE I
 *"----------------------------------------------------------------------
 
 * Put your ABAP code here.

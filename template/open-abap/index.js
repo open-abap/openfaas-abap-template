@@ -83,7 +83,7 @@ var middleware = async (req, res) => {
     let fnEvent = new FunctionEvent(req);
     let fnContext = new FunctionContext(cb);
 
-    Promise.resolve(handler(fnEvent.body))
+    Promise.resolve(handler(fnEvent))
     .then(res => {
         if(!fnContext.cbCalled) {
             fnContext

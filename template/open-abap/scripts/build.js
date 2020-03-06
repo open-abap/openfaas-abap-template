@@ -9,34 +9,81 @@ const SOURCE_DIR = 'function'
 const BUILD_DIR = 'build'
 
 const transpiler = new Transpiler()
-const abapToJs = async function (abapFile){
-    let transpiledSource = transpiler.run((await (await fs.readFile(abapFile)).toString()))
-    transpiledSource = 'const abap = require("@abaplint/runtime")'
-                        + '\n'
-                        + transpiledSource
-    if(abapFile.match(/.*handler.abap$/)){
-        return mockFunctionTranspilation(transpiledSource)
+const abapToJs = async function (abapFile) {
+    /* this is hackery: function modules and their signature are not supported
+    in ABAPLint and/or the transpiler yet.
+    In order to have a FUNCTION module handler, we need to add the signature to the 
+    ABAP code (so that the linter and the transpiler are happy)
+    and inject code lateron which passes the values to the handler
+    */
+
+    const mockFunctionTranspilation = function (abapSourceString) {
+        // add signature from comments (d'oh, this hurts! - please, Lars, transpile classes and interfaces soon!)
+        const abapSignatureLinesImporting = abapSourceString
+            .split('EXPORTING')[0]
+            .split(/\r?\n/)
+            .filter(l => l.match(/^\*.*TYPE/))
+        const abapSignatureLinesExporting = abapSourceString
+            .split('EXPORTING')[1]
+            .split(/\r?\n/)
+            .filter(l => l.match(/^\*.*TYPE/))
+
+        const abapSignatureLines = []
+            .concat(abapSignatureLinesImporting)
+            .concat(abapSignatureLinesExporting)
+
+        abapSourceString =
+            abapSignatureLines
+                .map(l => l.replace(/^\*"\s*/, 'DATA ') + '.')
+                .join('\n')
+            + abapSourceString
+
+        let transpiledSource = transpiler.run(abapSourceString)
+
+        // inject variable initialization
+        if (abapSignatureLines && abapSignatureLines.length) {
+            transpiledSourceArray = transpiledSource.split(/\r?\n/)
+            transpiledSourceArray.splice(abapSignatureLines.length, 0,
+                ...(abapSignatureLinesImporting.map(l => l.replace(/^\*"\s*(\w*).*/, '$1.set(input.$1);')))
+            ) //splice does not return a new array but manipulates the array instance!
+            transpiledSource = transpiledSourceArray.join('\n')
+        }
+
+        // finally, add the function wrapper
+        const FUNCTION_SETUP = 'module.exports = async function(input){'
+            + '\n// Generated code - do not edit\n'
+
+        return FUNCTION_SETUP
+            + transpiledSource
+                .replace('todo, statement: FunctionModule', '')
+                .replace('todo, statement: EndFunction', 'return {result: output.get(), code: code.get()}\n}')
     }
+
+    let abapSourceString = (await fs.readFile(abapFile)).toString()
+
+    let transpiledSource = ''
+
+    if (abapFile.match(/.*handler.abap$/)) {
+        // wrap the whole function module into a function
+        transpiledSource = mockFunctionTranspilation(abapSourceString)
+    } else {
+        transpiledSource = transpiler.run(abapSourceString)
+    }
+
+    // Add the JS imports
+    transpiledSource = 'const abap = require("@abaplint/runtime")\n'
+        + transpiledSource
+
+    // strip comments
     return transpiledSource
-}
-
-const mockFunctionTranspilation = function (source){
-    const FUNCTION_SETUP = 'module.exports = async function(input){'
-                            + '\n// Generated code - do not edit'
-                            + '\nlet output = new abap.types.String();'
-                            + '\nlet code = new abap.types.Integer();'
-
-    return source
-        .replace('todo, statement: FunctionModule', FUNCTION_SETUP)
-        .replace(/todo, statement: Comment\s?/g, '', )
-        .replace('todo, statement: EndFunction', 'return {result: output.get(), code: code.get()}\n}')
+        .replace(/todo, statement: Comment\s?/g, '')
 }
 
 const run = async function () {
     try {
         await fs.emptyDir(BUILD_DIR)
         await fs.rmdir(BUILD_DIR)
-    } catch(e){
+    } catch (e) {
         // expected: build dir might not exist
     }
 
