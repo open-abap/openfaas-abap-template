@@ -10,3 +10,14 @@ welcome_message: |
 
   Under the hood, this template scaffolds a transpilation of your ABAP source to Javascript.
   It will also execute only this Javascript.
+
+  This is NOT
+
+    ____  _                                         _    
+  / ___|| |_ ___  __ _ _ __ ___  _ __  _   _ _ __ | | __
+  \___ \| __/ _ \/ _` | '_ ` _ \| '_ \| | | | '_ \| |/ /
+  ___) | ||  __/ (_| | | | | | | |_) | |_| | | | |   < 
+  |____/ \__\___|\__,_|_| |_| |_| .__/ \__,_|_| |_|_|\_\
+                                |_|                     
+
+  But it's what it should be ;)
