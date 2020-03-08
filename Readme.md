@@ -1,9 +1,9 @@
 # OpenFaaS template for ABAP
 
 You are about to venture the unknown depths of outer space:
-Go, where no ABAP code has ever gone before: Into the realms where there's no Netweaver.
+Go, where no ABAP code has ever gone before: Into the realms where there's no NetWeaver.
 
-Howver, be aware: st this statge, a netweaver-less ABAP is only a proof of concept:
+Howver, be aware: at this statge, a netweaver-less ABAP is only a proof of concept:
 *Hardly any language features are supported - yet.*
 Feel free to experiment and contribute though!
 
