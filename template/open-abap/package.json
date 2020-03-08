@@ -1,7 +1,7 @@
 {
   "name": "openfaas-open-abap",
   "version": "1.0.0",
-  "description": "Template for ABAP source based functinos",
+  "description": "Template for ABAP source based functions",
   "main": "index.js",
   "scripts": {
     "build": "npm run build:transpile-abap",

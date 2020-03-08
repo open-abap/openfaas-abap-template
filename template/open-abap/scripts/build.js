@@ -38,7 +38,10 @@ const abapToJs = async function (abapFile) {
                 .join('\n')
             + abapSourceString
 
-        let transpiledSource = transpiler.run(abapSourceString)
+        let transpiledSource = transpiler.run(abapSourceString
+            .replace('FUNCTION HANDLER.', '') // function not supported, we just mock it
+            .replace('ENDFUNCTION.', '')
+            )
 
         // inject variable initialization
         if (abapSignatureLines && abapSignatureLines.length) {
@@ -55,8 +58,7 @@ const abapToJs = async function (abapFile) {
 
         return FUNCTION_SETUP
             + transpiledSource
-                .replace('todo, statement: FunctionModule', '')
-                .replace('todo, statement: EndFunction', 'return {result: result.get(), code: code.get() || 200}\n}')
+            + 'return { result: output.get(), code: code.get() || 200 }\n}'
     }
 
     let abapSourceString = (await fs.readFile(abapFile)).toString()

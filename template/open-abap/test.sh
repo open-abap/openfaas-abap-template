@@ -15,5 +15,13 @@ cd build
 cd $(ls)
 npm i
 
-cp -R ../../test .
+if [ -z $1 ]; then
+    cp -R ../../test . # default (locally): copy tests from non-shrinkwrapped folder
+elif [ $1 -eq '.' ]; then
+# no need to copy anything
+    echo 'Executing tests from local directory'
+else
+    cp -R $1 .
+fi
+
 npm test

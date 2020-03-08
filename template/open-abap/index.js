@@ -2,7 +2,7 @@
 
 const express = require('express')
 const app = express()
-const handler = require('./build/handler'); // this is the JS source which has been transpoled from ABAP
+const handler = require('./build/handler'); // this is the JS source which has been transpiled from ABAP
 const bodyParser = require('body-parser')
 
 if (process.env.RAW_BODY === 'true') {
