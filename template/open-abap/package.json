@@ -4,7 +4,7 @@
   "description": "Template for ABAP source based functions",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:transpile-abap",
+    "build": "webpack",
     "build:transpile-abap": "node ./scripts/build.js",
     "pretest": "npm run build",
     "test": "mocha"
@@ -13,17 +13,19 @@
   "author": "Oliver Jaegle",
   "license": "MIT",
   "dependencies": {
-    "@abaplint/runtime": "^0.3.0",
+    "@abaplint/runtime": "^0.4.1",
     "body-parser": "^1.18.2",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "regenerator-runtime": "^0.13.5"
   },
   "devDependencies": {
-    "@abaplint/transpiler": "^0.3.0",
-    "fs-extra": "^8.1.0",
-    "klaw": "^3.0.0",
+    "@abaplint/transpiler": "^0.4.1",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "babel-loader": "^8.0.6",
     "mocha": "^7.1.0",
-    "path": "^0.12.7",
     "should": "^13.2.3",
-    "through2": "^3.0.1"
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
   }
 }

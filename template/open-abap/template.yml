@@ -4,20 +4,13 @@ welcome_message: |
   You are about to venture the unknown depths of outer space: 
   Go, where no ABAP code has ever gone before: Into the realms where there's no Netweaver.
 
-  However, be aware: at this stage, a Netweaver-less ABAP is only a proof of concept:
+  Howver, be aware: st this statge, a netweaver-less ABAP is only a proof of concept:
   Hardly any language features are supported - yet.
   Feel free to experiment and contribute though!
 
   Under the hood, this template scaffolds a transpilation of your ABAP source to Javascript.
-  It will also execute only this Javascript.
+  It will also execute only this Javascript. 
 
-  This is NOT
+  Unit tests are run at build time via "npm run", edit package.json to specify 
+  how you want to execute them.
 
-    ____  _                                         _    
-  / ___|| |_ ___  __ _ _ __ ___  _ __  _   _ _ __ | | __
-  \___ \| __/ _ \/ _` | '_ ` _ \| '_ \| | | | '_ \| |/ /
-  ___) | ||  __/ (_| | | | | | | |_) | |_| | | | |   < 
-  |____/ \__\___|\__,_|_| |_| |_| .__/ \__,_|_| |_|_|\_\
-                                |_|                     
-
-  But it's what it should be ;)
