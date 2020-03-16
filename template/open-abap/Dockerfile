@@ -25,11 +25,10 @@ COPY index.js ./
 RUN npm i
 
 # Trigger the transpilation
-COPY scripts ./scripts
 COPY function ./function
 RUN npm run build
 
-# TODO: Add parameter to toggle tessting during docker build
+# TODO: Add parameter to toggle testing during docker build
 # # Run any tests that may be available
 # RUN npm test
 
