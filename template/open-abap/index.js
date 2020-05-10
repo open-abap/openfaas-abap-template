@@ -1,28 +1,33 @@
 "use strict"
 
+import "regenerator-runtime/runtime";
+
 const express = require('express')
 const app = express()
-const handler = require('./build/handler'); // this is the JS source which has been transpiled from ABAP
+const abap = require('./function/zcl_handler.clas.abap'); // this is the JS source which has been transpiled from ABAP
 const bodyParser = require('body-parser')
 
 if (process.env.RAW_BODY === 'true') {
     app.use(bodyParser.raw({ type: '*/*' }))
 } else {
     var jsonLimit = process.env.MAX_JSON_SIZE || '100kb' //body-parser default
-    app.use(bodyParser.json({ limit: jsonLimit}));
+    app.use(bodyParser.json({ limit: jsonLimit }));
     app.use(bodyParser.raw()); // "Content-Type: application/octet-stream"
-    app.use(bodyParser.text({ type : "text/*" }));
+    app.use(bodyParser.text({ type: "text/*" }));
 }
 
 app.disable('x-powered-by');
 
 class FunctionEvent {
     constructor(req) {
-        this.body = req.body;
-        this.headers = req.headers;
         this.method = req.method;
-        this.query = req.query;
+        // this.query = req.query; //TODO: Stringify query parameters - it's a string in the handler
         this.path = req.path;
+        // this.request = { // TODO: Re-enable once structures are supported
+        //     body: req.body,
+        //     headers: req.headers
+        // }
+        this.body = req.body;
     }
 }
 
@@ -35,7 +40,7 @@ class FunctionContext {
     }
 
     status(value) {
-        if(!value) {
+        if (!value) {
             return this.value;
         }
 
@@ -44,12 +49,12 @@ class FunctionContext {
     }
 
     headers(value) {
-        if(!value) {
+        if (!value) {
             return this.headerValues;
         }
 
         this.headerValues = value;
-        return this;    
+        return this;
     }
 
     succeed(value) {
@@ -73,27 +78,30 @@ var middleware = async (req, res) => {
             return res.status(500).send(err.toString ? err.toString() : err);
         }
 
-        if(isArray(functionResult) || isObject(functionResult)) {
+        if (isArray(functionResult) || isObject(functionResult)) {
             res.set(fnContext.headers()).status(fnContext.status()).send(JSON.stringify(functionResult));
         } else {
-            res.set(fnContext.headers()).status(fnContext.status()).send({result: functionResult});
+            res.set(fnContext.headers()).status(fnContext.status()).send({ result: functionResult });
         }
     };
 
     let fnEvent = new FunctionEvent(req);
     let fnContext = new FunctionContext(cb);
 
-    Promise.resolve(handler(fnEvent))
-    .then(res => {
-        if(!fnContext.cbCalled) {
-            fnContext
-                .status(200)
-                .succeed(res)
-        }
-    })
-    .catch(e => {
-        cb(e);
-    });
+    /* Invoke the ABAP handler */
+    const response = await new abap.zcl_handler().run(fnEvent);
+
+    const headers = {};
+    for (const h of response.get().headers.array()) {
+        headers[h.get().field.get()] = h.get().value.get();
+    }
+
+    if (!fnContext.cbCalled) {
+        fnContext
+            .status(200)
+            .headers(headers)
+            .succeed(response.get().body.get())
+    }
 };
 
 app.post('/*', middleware);
@@ -106,6 +114,7 @@ const port = process.env.http_port || 3000;
 
 app.listen(port, () => {
     console.log(`OpenFaaS Node.js to execute ABAP listening on port: ${port}`)
+    app.emit( "app_started" )
 });
 
 let isArray = (a) => {
